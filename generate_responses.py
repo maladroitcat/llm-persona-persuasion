@@ -4,12 +4,12 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Any, Iterable
 
-PERSONAS_PATH = Path("personas.jsonl")
+PERSONAS_PATH = Path("data/model_inputs/personas.jsonl")
 DEFAULT_MODEL = "llama3"
 TEMPLATE = (
     "Hi! I'm trying to convince my friend to go on a girls trip to Las Vegas with me. {description}"\
     " What would you say to them to persuade them to go if you were me? "\
-    "Put my verbatim response in single quotation marks like this: 'Hi friend!'"
+    "Put my verbatim response in parenthesis like this: (Hi friend!)"
 )
 
 
@@ -39,6 +39,7 @@ def call_ollama(model: str, prompt: str) -> str:
 
 
 def main() -> None:
+    # Argparse formatting debugged with help from ChatGPT on 11/1/2025
     parser = argparse.ArgumentParser(description="Generate persona responses via Ollama")
     parser.add_argument("--model", default=DEFAULT_MODEL, help="Ollama model name")
     parser.add_argument(
@@ -50,7 +51,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("responses.jsonl"),
+        default=Path("data/bronze/responses.jsonl"),
         help="Path to write JSONL responses (overwritten each run)",
     )
     args = parser.parse_args()
